@@ -1,0 +1,64 @@
+{
+  "name": "iobroker.valloxrs485",
+  "version": "0.0.1",
+  "description": "The adapter reads and writes parameters via RS485 from an to a Vallox ventilation bus.",
+  "author": {
+    "name": "Reelfan",
+    "email": "ufuk.a@mail.de"
+  },
+  "contributors": [
+    {
+      "name": "Skjall"
+    },
+    {
+      "name": "Heinz"
+    }
+  ],
+  "homepage": "https://github.com/Reelfan/ioBroker.valloxrs485",
+  "license": "MIT",
+  "keywords": [
+    "Vallox",
+    "RS485",
+    "ventilation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Reelfan/ioBroker.valloxrs485"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^2.4.0"
+  },
+  "devDependencies": {
+    "@iobroker/testing": "^2.3.0",
+    "@types/chai": "^4.2.13",
+    "@types/chai-as-promised": "^7.1.3",
+    "@types/gulp": "^4.0.7",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.11.8",
+    "@types/proxyquire": "^1.3.28",
+    "@types/sinon": "^9.0.8",
+    "@types/sinon-chai": "^3.2.5",
+    "axios": "^0.20.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.11.0",
+    "gulp": "^4.0.2",
+    "mocha": "^8.1.3",
+    "proxyquire": "^2.1.3",
+    "sinon": "^9.2.0",
+    "sinon-chai": "^3.5.0"
+  },
+  "main": "main.js",
+  "scripts": {
+    "test:js": "mocha --config test/mocharc.custom.json \"{!(node_modules|test)/**/*.test.js,*.test.js,test/**/test!(PackageFiles|Startup).js}\"",
+    "test:package": "mocha test/package --exit",
+    "test:unit": "mocha test/unit --exit",
+    "test:integration": "mocha test/integration --exit",
+    "test": "npm run test:js && npm run test:package",
+    "lint": "eslint"
+  },
+  "bugs": {
+    "url": "https://github.com/Reelfan/ioBroker.valloxrs485/issues"
+  },
+  "readmeFilename": "README.md"
+}

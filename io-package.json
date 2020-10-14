@@ -1,0 +1,78 @@
+{
+	"common": {
+		"name": "valloxrs485",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "ValloxRS485",
+		"titleLang": {
+			"en": "ValloxRS485",
+			"de": "ValloxRS485",
+			"ru": "ValloxRS485",
+			"pt": "ValloxRS485",
+			"nl": "ValloxRS485",
+			"fr": "ValloxRS485",
+			"it": "ValloxRS485",
+			"es": "ValloxRS485",
+			"pl": "ValloxRS485",
+			"zh-cn": "威乐RS485"
+		},
+		"desc": {
+			"en": "The adapter reads and writes parameters via RS485 from an to a Vallox ventilation bus.",
+			"de": "Der Adapter liest und schreibt Parameter über RS485 von einem zu einem Vallox-Lüftungsbus.",
+			"ru": "Адаптер считывает и записывает параметры через RS485 на шину вентиляции Vallox.",
+			"pt": "O adaptador lê e grava parâmetros via RS485 de um para um barramento de ventilação Vallox.",
+			"nl": "De adapter leest en schrijft parameters via RS485 van een naar een Vallox ventilatiebus.",
+			"fr": "L'adaptateur lit et écrit les paramètres via RS485 d'un bus de ventilation Vallox.",
+			"it": "L'adattatore legge e scrive i parametri tramite RS485 da un bus di ventilazione Vallox.",
+			"es": "El adaptador lee y escribe parámetros a través de RS485 desde un bus de ventilación Vallox.",
+			"pl": "Adapter odczytuje i zapisuje parametry przez RS485 z magistrali wentylacyjnej Vallox.",
+			"zh-cn": "适配器通过RS485从到Vallox通风总线读取和写入参数。"
+		},
+		"authors": [
+			"Reelfan <ufuk.a@mail.de>"
+		],
+		"keywords": [
+			"Vallox",
+			"RS485",
+			"ventilation"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "valloxrs485.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/Reelfan/ioBroker.valloxrs485/master/admin/valloxrs485.png",
+		"readme": "https://github.com/Reelfan/ioBroker.valloxrs485/blob/master/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "climate-control",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "push",
+		"materialize": true,
+		"dependencies": [
+			{
+				"js-controller": ">=2.0.0"
+			}
+		]
+	},
+	"native": {
+		"option1": true,
+		"option2": "42"
+	},
+	"objects": [],
+	"instanceObjects": []
+}

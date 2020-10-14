@@ -1,0 +1,42 @@
+{
+	"cli": true,
+	"adapterName": "valloxrs485",
+	"title": "ValloxRS485",
+	"description": "The adapter reads and writes parameters via RS485 from an to a Vallox ventilation bus.",
+	"keywords": [
+		"Vallox",
+		"RS485",
+		"ventilation"
+	],
+	"contributors": [
+		"Skjall",
+		"Heinz"
+	],
+	"expert": "no",
+	"features": [
+		"adapter"
+	],
+	"adminFeatures": [],
+	"type": "climate-control",
+	"startMode": "daemon",
+	"connectionType": "local",
+	"dataSource": "push",
+	"connectionIndicator": "no",
+	"language": "JavaScript",
+	"tools": [
+		"ESLint",
+		"type checking"
+	],
+	"indentation": "Tab",
+	"quotes": "double",
+	"es6class": "yes",
+	"authorName": "Reelfan",
+	"authorGithub": "Reelfan",
+	"authorEmail": "ufuk.a@mail.de",
+	"gitRemoteProtocol": "HTTPS",
+	"gitCommit": "no",
+	"license": "MIT License",
+	"ci": "gh-actions",
+	"dependabot": "no",
+	"creatorVersion": "1.29.1"
+}

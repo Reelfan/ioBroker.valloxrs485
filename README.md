@@ -16,6 +16,9 @@
 
 The adapter reads and writes parameters via RS485 from an to a Vallox ventilation bus.
 
+This a js rewrite in js taken from https://github.com/mhop/fhem-mirror/blob/master/fhem/FHEM/36_Vallox.pm
+Thanks to Skjall, i used his perl FHEM version, i wanted to have a ioBroker Adapter version.
+
 ## Developer manual
 This section is intended for the developer. It can be deleted later
 

@@ -14,6 +14,8 @@
 
 ## valloxrs485 adapter for ioBroker
 
+Disclaimer: This adapter is neither developed nor officially supported by the company Vallox GmbH  which distributes the Vallox ventilation Systems. Instructions should be followed with care and at your own risk.
+
 This adapter reads and writes parameters via RS485 from and to a Vallox ventilation bus.
 
 This a js rewrite adapted from https://github.com/mhop/fhem-mirror/blob/master/fhem/FHEM/36_Vallox.pm

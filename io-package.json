@@ -30,7 +30,7 @@
 			"zh-cn": "威乐RS485"
 		},
 		"desc": {
-			"en": "The adapter reads and writes parameters via RS485 from an to a Vallox ventilation bus.",
+			"en": "This ioBroker Adapter reads and writes parameters via RS485 from and to a Vallox ventilation bus.",
 			"de": "Der Adapter liest und schreibt Parameter über RS485 von einem zu einem Vallox-Lüftungsbus.",
 			"ru": "Адаптер считывает и записывает параметры через RS485 на шину вентиляции Vallox.",
 			"pt": "O adaptador lê e grava parâmetros via RS485 de um para um barramento de ventilação Vallox.",
@@ -69,10 +69,33 @@
 			}
 		]
 	},
-	"native": {
-		"option1": true,
-		"option2": "42"
-	},
-	"objects": [],
-	"instanceObjects": []
+  "native": {
+    "devicename": "/dev/ttyUSB1",
+    "baudrate": 9600,
+    "busversion": 2
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Adapter-Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "Whether the adapter is connected to Ventilation",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }

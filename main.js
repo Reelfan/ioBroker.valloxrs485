@@ -102,7 +102,7 @@ class Valloxrs485 extends utils.Adapter {
             this.log.info("Starting connector");
             //this.connector = new connector_1.Connector(this, this.config.server, this.config.port, this.config.advancedfunctions, this.config.interval, this.config.reconnectattempts, this.config.reconnectdelayms, this.config.requesttimeoutms);
             //this.connector.initializeSocket();
-            this.log.debug("Connecting");
+            this.log.info("Connecting");
             //this.connector.connect();
         }
         catch (error) {

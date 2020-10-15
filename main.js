@@ -7,7 +7,8 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
-
+const parameters_1 = require("./lib/parameters");
+const serialport = require("serialport");
 // Load your modules here, e.g.:
 // const fs = require("fs");
 
@@ -33,57 +34,79 @@ class Valloxrs485 extends utils.Adapter {
 	 */
 	async onReady() {
 		// Initialize your adapter here
-
-		// The adapters config (in the instance object everything under the attribute "native") is accessible via
-		// this.config:
-		this.log.info("config option1: " + this.config.option1);
-		this.log.info("config option2: " + this.config.option2);
-
-		/*
-		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-		*/
-		await this.setObjectNotExistsAsync("testVariable", {
-			type: "state",
-			common: {
-				name: "testVariable",
-				type: "boolean",
-				role: "indicator",
-				read: true,
-				write: true,
-			},
-			native: {},
-		});
-
-		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.subscribeStates("testVariable");
-		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-		// this.subscribeStates("lights.*");
-		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-		// this.subscribeStates("*");
-
-		/*
-			setState examples
-			you will notice that each setState will cause the stateChange event to fire (because of above subscribeStates cmd)
-		*/
-		// the variable testVariable is set to true as command (ack=false)
-		await this.setStateAsync("testVariable", true);
-
-		// same thing, but the value is flagged "ack"
-		// ack should be always set to true if the value is received from or acknowledged from the target system
-		await this.setStateAsync("testVariable", { val: true, ack: true });
-
-		// same thing, but the state is deleted after 30s (getState will return null afterwards)
-		await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
-
-		// examples for the checkPassword/checkGroup functions
-		let result = await this.checkPasswordAsync("admin", "iobroker");
-		this.log.info("check user admin pw iobroker: " + result);
-
-		result = await this.checkGroupAsync("admin", "admin");
-		this.log.info("check group user admin group admin: " + result);
-	}
+        try {
+            // The adapters config (in the instance object everything under the attribute "native") is accessible via
+            this.log.debug("config: " + this.config);
+            //Setup state objects for Vallox parameters
+            for (const [func, attributes] of Object.entries(parameters_1.ValloxParameter)) {
+                //Potentially skip parameters marked as "advanced"
+                if ((attributes.category == "advanced") && (!this.config.advancedfunctions))
+                    continue;
+                this.log.info("Setting up state for " + func);
+                const mayRead = attributes.modbus_r > -1 ? true : false;
+                const mayWrite = attributes.modbus_w > -1 ? true : false;
+                //Prepare common section for object
+                const commonSettings = {
+                    name: attributes.descr,
+                    type: "number",
+                    role: "value",
+                    read: mayRead,
+                    write: mayWrite,
+                };
+                //Add some optional parameters to config
+                if (attributes.value_def.unit)
+                    commonSettings.unit = attributes.value_def.unit;
+                if (attributes.value_type == "choice") {
+                    commonSettings.states = attributes.value_def;
+                    const numberOfKeys = Object.keys(attributes.value_def).length;
+                    if (numberOfKeys == 2)
+                        (mayWrite) ? commonSettings.role = "switch" : commonSettings.role = "sensor";
+                    else
+                        (mayWrite) ? commonSettings.role = "level.mode" : commonSettings.role = "value";
+                }
+                if (attributes.value_type == "range") {
+                    commonSettings.min = attributes.value_def.min;
+                    commonSettings.max = attributes.value_def.max;
+                }
+                //Set some more specific roles
+                if (attributes.value_def.unit == "°C")
+                    (mayWrite) ? commonSettings.role = "level.temperature" : commonSettings.role = "value.temperature";
+                if (attributes.value_def.unit == "rpm")
+                    commonSettings.role = "value.speed";
+                //Individual treatment for special cases
+                if (attributes.common_role_overwrite)
+                    commonSettings.role = attributes.common_role_overwrite;
+                await this.setObjectNotExistsAsync("parameters." + func, {
+                    type: "state",
+                    common: commonSettings,
+                    native: {},
+                });
+                //Have a corresponding "lastUpdate" object where a timestamp of data-retrieval is stored
+                await this.setObjectNotExistsAsync("lastUpdate." + func, {
+                    type: "state",
+                    common: {
+                        name: attributes.descr,
+                        type: "string",
+                        role: "date",
+                        read: mayRead,
+                        write: false
+                    },
+                    native: {},
+                });
+            }
+            // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
+            this.subscribeStates("parameters.*");
+            this.log.info("Starting connector");
+            this.connector = new connector_1.Connector(this, this.config.server, this.config.port, this.config.advancedfunctions, this.config.interval, this.config.reconnectattempts, this.config.reconnectdelayms, this.config.requesttimeoutms);
+            this.connector.initializeSocket();
+            this.log.debug("Connecting");
+            this.connector.connect();
+        }
+        catch (error) {
+            this.log.error(error.message);
+            Promise.reject(error.message);
+        }
+    }
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!

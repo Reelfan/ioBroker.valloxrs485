@@ -8,7 +8,13 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 const parameters_1 = require("./lib/parameters");
-const serialport = require("serialport");
+
+try {
+    SerialPort = require("serialport");
+} catch (err) {
+    console.error('Cannot load serialport module'};
+}
+
 // Load your modules here, e.g.:
 // const fs = require("fs");
 

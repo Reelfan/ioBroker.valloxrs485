@@ -9,11 +9,11 @@
 const utils = require("@iobroker/adapter-core");
 const parameters_1 = require("./lib/parameters");
 
-try {
-    SerialPort = require("serialport");
-} catch (err) {
-    console.error('Cannot load serialport module'};
-}
+//try {
+//    SerialPort = require("serialport");
+//} catch (err) {
+//    console.error('Cannot load serialport module'};
+//}
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
@@ -45,9 +45,6 @@ class Valloxrs485 extends utils.Adapter {
             this.log.debug("config: " + this.config);
             //Setup state objects for Vallox parameters
             for (const [func, attributes] of Object.entries(parameters_1.ValloxParameter)) {
-                //Potentially skip parameters marked as "advanced"
-                if ((attributes.category == "advanced") && (!this.config.advancedfunctions))
-                    continue;
                 this.log.info("Setting up state for " + func);
                 const mayRead = attributes.modbus_r > -1 ? true : false;
                 const mayWrite = attributes.modbus_w > -1 ? true : false;
@@ -103,10 +100,10 @@ class Valloxrs485 extends utils.Adapter {
             // In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
             this.subscribeStates("parameters.*");
             this.log.info("Starting connector");
-            this.connector = new connector_1.Connector(this, this.config.server, this.config.port, this.config.advancedfunctions, this.config.interval, this.config.reconnectattempts, this.config.reconnectdelayms, this.config.requesttimeoutms);
-            this.connector.initializeSocket();
+            //this.connector = new connector_1.Connector(this, this.config.server, this.config.port, this.config.advancedfunctions, this.config.interval, this.config.reconnectattempts, this.config.reconnectdelayms, this.config.requesttimeoutms);
+            //this.connector.initializeSocket();
             this.log.debug("Connecting");
-            this.connector.connect();
+            //this.connector.connect();
         }
         catch (error) {
             this.log.error(error.message);
